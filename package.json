@@ -1,0 +1,23 @@
+{
+  "name": "lastpasstomacpass",
+  "version": "1.0.0",
+  "description": "Convert lastpass exported csv file to MacPass format xml",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lastpass",
+    "keepass",
+    "macpass"
+  ],
+  "author": "trester",
+  "license": "MIT",
+  "dependencies": {
+    "csvtojson": "^0.4.3",
+    "jade": "^1.11.0"
+  },
+  "bin": {
+    "lastpasstomacpass": "index.js"
+  }
+}

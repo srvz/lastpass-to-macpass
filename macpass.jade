@@ -1,0 +1,27 @@
+mixin groups(data)
+	each val, groupName in data
+		Group
+			Name=groupName
+			IconID 48
+			IsExpanded True
+			each item in val
+				Entry
+					IconID 0
+					each v, k in item
+						String
+							Key=k
+							Value=v
+
+doctype xml
+KeePassFile
+	Meta
+		Generator MacPass
+	Root
+		Group
+			Name General
+			IconID 48
+			IsExpanded True
+			+groups(Groups)
+
+
+
