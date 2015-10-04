@@ -1,8 +1,6 @@
 # lastpass-to-macpass
 
----------
-
-### Convert lastpass exported csv file to MacPass support xml format.
+ Convert lastpass exported csv file to MacPass support xml format.
 
 
 ## how to
