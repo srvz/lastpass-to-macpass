@@ -2,9 +2,10 @@
 module.exports = function() {
 
 	var fs = require('fs');
+	var jade = require('jade');
+	var path = require('path');
 	var Converter = require('csvtojson').Converter;
 	var converter = new Converter({});
-	var jade = require('jade');
 
 	function readCsv(filename) {
 
@@ -14,11 +15,6 @@ module.exports = function() {
 
 			convertToXml(jsonArray);
 		});
-
-		converter.on('error', function(error) {
-
-			console.error(error);
-		})
 	}
 
 	function convertToXml(json) {
@@ -26,7 +22,13 @@ module.exports = function() {
 		var rst = {};
 		json.forEach(function(item) {
 
+			if (item.grouping === '') {
+
+				item.grouping = 'Other';
+			}
+
 			var group = rst[item.grouping] || [];
+
 			var n = {};
 			n.Title = item.name;
 			n.URL = item.url;
@@ -34,17 +36,18 @@ module.exports = function() {
 			n.Password = item.password;
 			n.Notes = item.extra;
 			group.push(n);
+
 			rst[item.grouping] = group;
 		});
 
-
-
 		var xml = jade.renderFile('./macpass.jade', {Groups: rst});
-		fs.writeFile('/Users/huokr/Documents/macpass-file.xml', xml, function(err) {
+
+		var optput = path.join(process.cwd, 'macpass.xml');
+		fs.writeFile(output, xml, function(err) {
 			if (err) {
 				console.error(err, err.stack);
 			} else {
-				console.info('done');
+				console.info('Output: ', output);
 			}
 		})
 	}
@@ -58,10 +61,9 @@ module.exports = function() {
 
 			console.log('');
 			console.log('   Usage: lastpasstomacpass lastpass.csv\n');
-			console.log('   It will generate `macpass.xml` in the same directory.\n')
+			console.log('   It will generate `macpass.xml` in current directory.\n')
 			return;
 		}
-
 
 		try {
 
@@ -73,9 +75,8 @@ module.exports = function() {
 		}
 
 		readCsv(input);
-	};
+	}
 
 	parseOpts();
-
 };
 
