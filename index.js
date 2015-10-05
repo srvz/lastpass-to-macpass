@@ -40,9 +40,9 @@ module.exports = function() {
 			rst[item.grouping] = group;
 		});
 
-		var xml = jade.renderFile('./macpass.jade', {Groups: rst});
+		var xml = jade.renderFile(path.join(__dirname, './macpass.jade'), {Groups: rst});
 
-		var optput = path.join(process.cwd, 'macpass.xml');
+		var output = path.join(process.cwd(), 'macpass.xml');
 		fs.writeFile(output, xml, function(err) {
 			if (err) {
 				console.error(err, err.stack);
@@ -57,7 +57,7 @@ module.exports = function() {
 		var args = process.argv;
 		var input = args[2];
 
-		if (args.indexOf('-h') > -1 || args.indexOf('--help') || args.indexOf('help') || !input) {
+		if (args.indexOf('-h') > -1 || args.indexOf('--help') > -1 || args.indexOf('help') > -1 || !input) {
 
 			console.log('');
 			console.log('   Usage: lastpasstomacpass lastpass.csv\n');
